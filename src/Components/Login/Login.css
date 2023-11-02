@@ -27,29 +27,18 @@
 
 @keyframes gradientBackground {
   0% {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQownAMzReEmNWA7f_kM3ya0bIs-vHLH8pivw&usqp=CAU'); /* Replace with the path to your image */
-    background-size: cover;
-  }
-  25% {
-    background-image: url('https://www.shutterstock.com/image-illustration/animated-coin-dollarmoney-money-icon-260nw-2220871031.jpg'); /* Replace with the path to your image */
+    background-image: url('https://img.freepik.com/premium-photo/growth-business-finance-chart-white-money-stock-graph-data-3d-background-digital-investment-economy-market-profit-financial-banking-graphic-pattern-currency-trading-price-website-wallpaper_79161-2049.jpg'); /* Replace with the path to your image */
     background-size: cover;
   }
   50% {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH_JJuBrLeemLxLib8Xi3Gsa0Wnam-nI9uHQ&usqp=CAU'); /* Replace with the path to your image */
-    background-size: cover;
-  }
-  75% {
-    background-image: url('https://www.shutterstock.com/image-illustration/animated-coin-dollarmoney-money-icon-260nw-2220871031.jpg'); /* Replace with the path to your image */
+    background-image: url('https://img.freepik.com/free-vector/white-arrow-background-modern-border-technology-concept-vector_53876-143337.jpg?w=740&t=st=1698918265~exp=1698918865~hmac=08a942e313defc15c2e38b846a1c0a503160be11c8cea791aea3025a595d4d16'); /* Replace with the path to your image */
     background-size: cover;
   }
   100% {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCQwQWgOxHIsHksgRT1m_NiuYvQnuuGYi4lw&usqp=CAU'); /* Replace with the path to your image */
+    background-image: url('https://img.freepik.com/free-vector/abstract-arrow-background-white-gradient-business-development-concept-vector_53876-143336.jpg?w=1060&t=st=1698918318~exp=1698918918~hmac=660f24e42a378b90fda40154c032e39d44e8bbb402b97a5a203033e6d597ad62'); /* Replace with the path to your image */
     background-size: cover;
   }
-  125% {
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8v0T-qAy8jtQVH42IGOSQgco2vh04HJxbng&usqp=CAU'); /* Replace with the path to your image */
-    background-size: cover;
-  }
+
 }
 
 /* Apply the animation to the background */

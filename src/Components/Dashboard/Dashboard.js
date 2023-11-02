@@ -661,71 +661,123 @@ const Dashboard = () => {
                 </TableHead>
 
                 <TableBody
-  style={{
-    fontWeight: "bold",
-    fontSize: "20px",
-  }}
->
-  {Array.isArray(tableData) && tableData.length > 0 ? (
-    tableData.map((row, index) => (
-      <TableRow key={index}>
-        {/* Your mapping logic here */}
-      </TableRow>
-    ))
-  ) : (
-    <TableRow>
-      <TableCell colSpan={5}>No data available</TableCell>
-    </TableRow>
-  )}
-  <TableRow>
-    <TableCell
-      style={{
-        fontWeight: "bold",
-        fontSize: "20px",
-        background: "light grey",
-      }}
-    >
-      Total
-    </TableCell>
-    <TableCell
-      style={{
-        fontWeight: "bold",
-        fontSize: "20px",
-        background: "light grey",
-      }}
-    >
-      {calculateTotal().totalLimit}
-    </TableCell>
-    <TableCell
-      style={{
-        fontWeight: "bold",
-        fontSize: "20px",
-        background: "light grey",
-      }}
-    >
-      {calculateTotal().totalBalance}
-    </TableCell>
-    <TableCell
-      style={{
-        fontWeight: "bold",
-        fontSize: "20px",
-        background: "light grey",
-      }}
-    >
-      -
-    </TableCell>
-    <TableCell
-      style={{
-        fontWeight: "bold",
-        fontSize: "20px",
-        background: "light grey",
-      }}
-    >
-      -
-    </TableCell>
-  </TableRow>
-</TableBody>
-
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                  }}
+                >
+                  
+                  {tableData.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        {editMode[index] ? (
+                          <TextField
+                            name={`account-${index}`}
+                            value={row.account}
+                            onChange={(e) => handleRowInputChange(e, index)}
+                          />
+                        ) : (
+                          row.account
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {editMode[index] ? (
+                          <TextField
+                            name={`limit_amount-${index}`}
+                            value={row.limit_amount}
+                            onChange={(e) => handleRowInputChange(e, index)}
+                          />
+                        ) : (
+                          row.limit_amount
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {editMode[index] ? (
+                          <TextField
+                            name={`balance-${index}`}
+                            value={row.balance}
+                            onChange={(e) => handleRowInputChange(e, index)}
+                          />
+                        ) : (
+                          row.balance
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {editMode[index] ? (
+                          <TextField
+                            name={`date-${index}`}
+                            type="date"
+                            value={row.date}
+                            onChange={(e) => handleRowInputChange(e, index)}
+                          />
+                        ) : (
+                          new Date(row.date).toLocaleDateString()
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <IconButton
+                          aria-label={editMode[index] ? "Save" : "Edit"}
+                          onClick={() => toggleEditMode(index)}
+                        >
+                          {editMode[index] ? <SaveIcon /> : <EditIcon />}
+                        </IconButton>
+                        <IconButton
+                          aria-label="Delete"
+                          onClick={() => handleDeleteRow(index, row.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        background: "light grey",
+                      }}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        background: "light grey",
+                      }}
+                    >
+                      {calculateTotal().totalLimit}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        background: "light grey",
+                      }}
+                    >
+                      {calculateTotal().totalBalance}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        background: "light grey",
+                      }}
+                    >
+                      -
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        background: "light grey",
+                      }}
+                    >
+                      -
+                    </TableCell>{" "}
+                  </TableRow>
+                </TableBody>
               </Table>
             </TableContainer>
           </div>
