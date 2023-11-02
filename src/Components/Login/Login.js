@@ -66,7 +66,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8099/login/api/login",
+        "http://188.166.228.50:8089/login/api/login",
         formData,
         {
           headers: {
