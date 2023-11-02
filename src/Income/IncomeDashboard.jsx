@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import ApiCalls from "../API/ApiCalls";
 import IncomeImg from "../../src/assets/Images/income.png";
 import { useNavigate } from "react-router-dom";
+
+
 export default function IncomeDashboard() {
   const navigate = useNavigate();
   const [totalIncome, setTotalIncome] = useState(0);
@@ -46,6 +48,8 @@ export default function IncomeDashboard() {
       })
       .catch((err) => console.log(err));
   };
+
+  
   return (
     <Grid container sx={{ flexGrow: 1 }}>
       <Grid container xs={12}>

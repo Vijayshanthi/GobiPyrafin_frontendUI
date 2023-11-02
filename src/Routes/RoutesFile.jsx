@@ -11,7 +11,7 @@ export default function RoutesFile() {
   return (
 
     <Routes>
-      <Route path="/" element={<RegistrationForm />} />
+      <Route path="/" element={<Login />} />
       <Route path="/income" element={user && <IncomeDashboard />} />
       <Route path="/expense" element={user && <ExpenseDashboard />} />
       <Route path="/layout" element={user && <Layout />} />

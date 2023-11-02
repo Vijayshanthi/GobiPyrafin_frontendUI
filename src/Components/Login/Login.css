@@ -1,0 +1,62 @@
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+
+.transparent-box {
+  background: rgba(248, 245, 245, 0.8); /* Adjust the last value for transparency (0.0 to 1.0) */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(15, 1, 1, 0.2); /* Optional shadow effect */
+}
+
+.email-alert {
+  color: red;
+  display: none;
+}
+
+.password-alert {
+  color: red;
+  display: none;
+}
+
+
+@keyframes gradientBackground {
+  0% {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQownAMzReEmNWA7f_kM3ya0bIs-vHLH8pivw&usqp=CAU'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+  25% {
+    background-image: url('https://www.shutterstock.com/image-illustration/animated-coin-dollarmoney-money-icon-260nw-2220871031.jpg'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+  50% {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH_JJuBrLeemLxLib8Xi3Gsa0Wnam-nI9uHQ&usqp=CAU'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+  75% {
+    background-image: url('https://www.shutterstock.com/image-illustration/animated-coin-dollarmoney-money-icon-260nw-2220871031.jpg'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+  100% {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCQwQWgOxHIsHksgRT1m_NiuYvQnuuGYi4lw&usqp=CAU'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+  125% {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8v0T-qAy8jtQVH42IGOSQgco2vh04HJxbng&usqp=CAU'); /* Replace with the path to your image */
+    background-size: cover;
+  }
+}
+
+/* Apply the animation to the background */
+body {
+  animation: gradientBackground 10s linear infinite;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}

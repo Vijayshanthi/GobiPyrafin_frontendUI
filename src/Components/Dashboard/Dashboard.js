@@ -39,6 +39,10 @@ import IncomeImg from "../../assets/Images/income.png";
 import ExpenseImg from "../../assets/Images/expense.png";
 import PfImg from "../../assets/Images/profit and loss.png";
 import { useNavigate } from "react-router-dom";
+import "./Dashboard.css"; // Import your CSS file
+import Avatar from '@mui/material/Avatar';
+
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -49,7 +53,7 @@ const theme = createTheme({
 
 const Dashboard = () => {
   const navigate = useNavigate();
-
+  const [error, setError] = useState("");
   const [tableData, setTableData] = useState([]);
   const [isAddDialogOpen, setAddDialogOpen] = useState(false);
 
@@ -100,6 +104,19 @@ const Dashboard = () => {
     }
   };
 
+  const isValidData = () => {
+    if (
+      newRowData.account &&
+      newRowData.limit_amount &&
+      newRowData.balance &&
+      newRowData.date
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+
   const handleAddButtonClick = async () => {
     const newData = {
       account: newRowData.account,
@@ -113,7 +130,9 @@ const Dashboard = () => {
       newData.limit_amount &&
       newData.balance &&
       newData.date
-    ) {
+    )
+    
+    {
       try {
         await Axios({
           url: "http://188.166.228.50:8089/account/api/account-summary",
@@ -367,14 +386,13 @@ const Dashboard = () => {
     gettotalExpense();
   }, []);
 
-
   return (
     <ThemeProvider theme={theme}>
       <div>
         <Container>
           <Typography
             sx={{
-              fontSize: "250%",
+              fontSize: "200%",
               color: "secondary",
               padding: "10px",
               fontFamily: 'Vazir',
@@ -397,7 +415,7 @@ const Dashboard = () => {
                   paddingLeft: "20px",
                   background: "white",
                   color: "Black",
-                  marginLeft: "20px",
+                  marginLeft: "40px",
                   paddingTop: "10px",
                   marginRight: "30px",
                   Fontweight: "Bold",
@@ -414,13 +432,15 @@ const Dashboard = () => {
                   }}
                 >
                   Income
-                  <img src={IncomeImg} alt="" style={{ marginleft: "20px", height: "30px" }} />
+
+                  <div style={{ float: "right", width: "70%", textAlign: "right" }}>
+                  <img src={IncomeImg} alt="" style={{  height: "40px" }} /></div>
                 </Typography>
 
                 <Typography
                   sx={{
                     color: "Black",
-                    fontSize: { md: "20px", xs: "1rem" },
+                    fontSize: { md: "20px", xs: "2rem" },
                     color: "secondary",
                     padding: "10px",
                     fontFamily: 'Vazir',
@@ -461,13 +481,15 @@ const Dashboard = () => {
                   }}
                 >
                   Expenses
-                  <img src={ExpenseImg} alt="" />
+                  <div style={{ float: "right", width: "50%", textAlign: "right" }}>
+
+                  <img src={ExpenseImg} alt="" style={{  height: "60px" }}/></div>
                 </Typography>
 
                 <Typography
                   sx={{
                     color: "Black",
-                    fontSize: { md: "20px", xs: "1rem" },
+                    fontSize: { md: "20px", xs: "2rem" },
                     color: "secondary",
                     padding: "10px",
                     fontFamily: 'Vazir',
@@ -510,18 +532,21 @@ const Dashboard = () => {
                   }}
                 >
                   Profit/Loss
-                  <img src={PfImg} alt="" style={{ height: "30px" }} />
+                  <div style={{ float: "right", width: "50%", textAlign: "right" }}>
+
+                  <img src={PfImg} alt="" style={{ height: "60px" }} /> </div>
                 </Typography>
 
                 <Typography
                   className={style}
                   sx={{
-                    fontSize: { md: "20px", xs: "1rem" },
+                    color: "Black",
+                    fontSize: { md: "20px", xs: "2rem" },
                     color: "secondary",
                     padding: "10px",
                     fontFamily: 'Vazir',
                     color: "Black",
-                    fontWeight: "bold", color: "Black",
+                    fontWeight: "bold",
                   }}
                 >
                   {totalIncome - totalExpense}
@@ -538,21 +563,14 @@ const Dashboard = () => {
               }}
             >
               <div>
-                <IconButton
-                  aria-label="Add"
-                  onClick={handleAddRow}
-                  style={{
-                    borderRadius: "50%",
-                    width: "48px",
-                    height: "48px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "black",
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
+               <Button
+                   variant="contained"
+                   color="primary"
+                   startIcon={<AddIcon />}
+                   onClick={handleAddRow}
+              >
+                    Add Data
+              </Button>
               </div>
               <div>
                 <IconButton
@@ -643,122 +661,71 @@ const Dashboard = () => {
                 </TableHead>
 
                 <TableBody
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "20px",
-                  }}
-                >
-                  {tableData.map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell>
-                        {editMode[index] ? (
-                          <TextField
-                            name={`account-${index}`}
-                            value={row.account}
-                            onChange={(e) => handleRowInputChange(e, index)}
-                          />
-                        ) : (
-                          row.account
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {editMode[index] ? (
-                          <TextField
-                            name={`limit_amount-${index}`}
-                            value={row.limit_amount}
-                            onChange={(e) => handleRowInputChange(e, index)}
-                          />
-                        ) : (
-                          row.limit_amount
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {editMode[index] ? (
-                          <TextField
-                            name={`balance-${index}`}
-                            value={row.balance}
-                            onChange={(e) => handleRowInputChange(e, index)}
-                          />
-                        ) : (
-                          row.balance
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {editMode[index] ? (
-                          <TextField
-                            name={`date-${index}`}
-                            type="date"
-                            value={row.date}
-                            onChange={(e) => handleRowInputChange(e, index)}
-                          />
-                        ) : (
-                          new Date(row.date).toLocaleDateString()
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <IconButton
-                          aria-label={editMode[index] ? "Save" : "Edit"}
-                          onClick={() => toggleEditMode(index)}
-                        >
-                          {editMode[index] ? <SaveIcon /> : <EditIcon />}
-                        </IconButton>
-                        <IconButton
-                          aria-label="Delete"
-                          onClick={() => handleDeleteRow(index, row.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        background: "light grey",
-                      }}
-                    >
-                      Total
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        background: "light grey",
-                      }}
-                    >
-                      {calculateTotal().totalLimit}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        background: "light grey",
-                      }}
-                    >
-                      {calculateTotal().totalBalance}
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        background: "light grey",
-                      }}
-                    >
-                      -
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        background: "light grey",
-                      }}
-                    >
-                      -
-                    </TableCell>{" "}
-                  </TableRow>
-                </TableBody>
+  style={{
+    fontWeight: "bold",
+    fontSize: "20px",
+  }}
+>
+  {Array.isArray(tableData) && tableData.length > 0 ? (
+    tableData.map((row, index) => (
+      <TableRow key={index}>
+        {/* Your mapping logic here */}
+      </TableRow>
+    ))
+  ) : (
+    <TableRow>
+      <TableCell colSpan={5}>No data available</TableCell>
+    </TableRow>
+  )}
+  <TableRow>
+    <TableCell
+      style={{
+        fontWeight: "bold",
+        fontSize: "20px",
+        background: "light grey",
+      }}
+    >
+      Total
+    </TableCell>
+    <TableCell
+      style={{
+        fontWeight: "bold",
+        fontSize: "20px",
+        background: "light grey",
+      }}
+    >
+      {calculateTotal().totalLimit}
+    </TableCell>
+    <TableCell
+      style={{
+        fontWeight: "bold",
+        fontSize: "20px",
+        background: "light grey",
+      }}
+    >
+      {calculateTotal().totalBalance}
+    </TableCell>
+    <TableCell
+      style={{
+        fontWeight: "bold",
+        fontSize: "20px",
+        background: "light grey",
+      }}
+    >
+      -
+    </TableCell>
+    <TableCell
+      style={{
+        fontWeight: "bold",
+        fontSize: "20px",
+        background: "light grey",
+      }}
+    >
+      -
+    </TableCell>
+  </TableRow>
+</TableBody>
+
               </Table>
             </TableContainer>
           </div>
@@ -766,19 +733,23 @@ const Dashboard = () => {
             open={isAddDialogOpen}
             onClose={() => setAddDialogOpen(false)}
           >
-            <DialogTitle>Add a New Row</DialogTitle>
+            <DialogTitle>Add a New Details    </DialogTitle>
+
             <DialogContent>
               <DialogContentText>
-                Enter the details for the new row:
-              </DialogContentText>
+                Enter the details for the new Add:
+              </DialogContentText> <br/>
+
               <TextField
                 name="account"
                 placeholder="Account"
+                borderRadius= '10px'
                 value={newRowData.account}
                 onChange={handleInputChange}
                 fullWidth
                 required
-              />
+                style={{ marginBottom: '10px', borderColor: newRowData.account ? 'initial' : 'red' }}  />
+
               <TextField
                 name="limit_amount"
                 placeholder="Limit"
@@ -786,7 +757,13 @@ const Dashboard = () => {
                 onChange={handleInputChange}
                 fullWidth
                 required
-              />
+                style={{ marginBottom: '10px', borderColor: newRowData.limit_amount ? 'initial' : 'red' }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && newRowData.account && newRowData.limit_amount) {
+                    document.getElementById("balance").focus();
+                  }
+                }}
+              /> 
               <TextField
                 name="balance"
                 placeholder="Balance"
@@ -794,6 +771,12 @@ const Dashboard = () => {
                 onChange={handleInputChange}
                 fullWidth
                 required
+                style={{ marginBottom: '10px', borderColor: newRowData.balance ? 'initial' : 'red' }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && newRowData.balance) {
+                    document.getElementById("date").focus();
+                  }
+                }}
               />
               <TextField
                 name="date"
@@ -803,10 +786,15 @@ const Dashboard = () => {
                 onChange={handleInputChange}
                 fullWidth
                 required
+                style={{ marginBottom: '10px', borderColor: newRowData.balance ? 'initial' : 'red' }}
+
               />
+                      {error && <Typography color="error">{error}</Typography>}
+
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleAddButtonClick}>Add</Button>
+            <Button onClick={handleAddButtonClick} disabled={!isValidData()}>Add</Button>
+            <Button onClick={() => setAddDialogOpen(false)}>Close</Button>
             </DialogActions>
           </Dialog>
         </Container>
