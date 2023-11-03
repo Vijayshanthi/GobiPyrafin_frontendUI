@@ -42,8 +42,11 @@ export default function ExpenseRecord({
     Particulars: "",
     Amount: "",
     CGST: "",
+    CGSTPercentage: "",
     SGST: "",
+    SGSTPercentage: "",
     IGST: "",
+    IGSTPercentage: "",
     PaymentType: "",
     AccountType: "",
     Section: "",
@@ -118,8 +121,11 @@ export default function ExpenseRecord({
       Particulars: "",
       Amount: "",
       CGST: "",
+      CGSTPercentage: "",
       SGST: "",
+      SGSTPercentage: "",
       IGST: "",
+      IGSTPercentage: "",
       PaymentType: "",
       AccountType: "",
       Section: "",
@@ -150,9 +156,9 @@ export default function ExpenseRecord({
     } else {
       if (adddetails.ActionDate <= adddetails.DueDate) {
         const total =
-          (adddetails.CGST / 100) * adddetails.Amount +
-          (adddetails.SGST / 100) * adddetails.Amount +
-          (adddetails.IGST / 100) * adddetails.Amount +
+          Number((adddetails.CGSTPercentage / 100) * adddetails.Amount) +
+          Number((adddetails.SGSTPercentage / 100) * adddetails.Amount) +
+          Number((adddetails.IGSTPercentage / 100) * adddetails.Amount) +
           adddetails.Amount;
 
         const tdsamount = (adddetails.TDS / 100) * adddetails.Amount;
@@ -169,9 +175,15 @@ export default function ExpenseRecord({
               ...adddetails,
               TotalAmount: total - tdsamount,
               BalanceDue: total - tdsamount,
-              CGST: Number(adddetails.CGST),
-              SGST: Number(adddetails.SGST),
-              IGST: Number(adddetails.IGST),
+              CGST: Number(
+                (adddetails.CGSTPercentage / 100) * adddetails.Amount
+              ),
+              SGST: Number(
+                (adddetails.SGSTPercentage / 100) * adddetails.Amount
+              ),
+              IGST: Number(
+                (adddetails.IGSTPercentage / 100) * adddetails.Amount
+              ),
               TDS: Number(adddetails.TDS),
               TDSAmount: tdsamount,
             });
@@ -180,9 +192,15 @@ export default function ExpenseRecord({
               ...adddetails,
               TotalAmount: total,
               BalanceDue: total,
-              CGST: Number(adddetails.CGST),
-              SGST: Number(adddetails.SGST),
-              IGST: Number(adddetails.IGST),
+              CGST: Number(
+                (adddetails.CGSTPercentage / 100) * adddetails.Amount
+              ),
+              SGST: Number(
+                (adddetails.SGSTPercentage / 100) * adddetails.Amount
+              ),
+              IGST: Number(
+                (adddetails.IGSTPercentage / 100) * adddetails.Amount
+              ),
               TDS: Number(adddetails.TDS),
               TDSAmount: tdsamount,
             });
@@ -193,9 +211,15 @@ export default function ExpenseRecord({
               ...adddetails,
               TotalAmount: total - tdsamount,
               BalanceDue: total - tdsamount,
-              CGST: Number(adddetails.CGST),
-              SGST: Number(adddetails.SGST),
-              IGST: Number(adddetails.IGST),
+              CGST: Number(
+                (adddetails.CGSTPercentage / 100) * adddetails.Amount
+              ),
+              SGST: Number(
+                (adddetails.SGSTPercentage / 100) * adddetails.Amount
+              ),
+              IGST: Number(
+                (adddetails.IGSTPercentage / 100) * adddetails.Amount
+              ),
               TDS: Number(adddetails.TDS),
               TDSAmount: tdsamount,
             });
@@ -204,9 +228,15 @@ export default function ExpenseRecord({
               ...adddetails,
               TotalAmount: total,
               BalanceDue: total,
-              CGST: Number(adddetails.CGST),
-              SGST: Number(adddetails.SGST),
-              IGST: Number(adddetails.IGST),
+              CGST: Number(
+                (adddetails.CGSTPercentage / 100) * adddetails.Amount
+              ),
+              SGST: Number(
+                (adddetails.SGSTPercentage / 100) * adddetails.Amount
+              ),
+              IGST: Number(
+                (adddetails.IGSTPercentage / 100) * adddetails.Amount
+              ),
               TDS: Number(adddetails.TDS),
               TDSAmount: tdsamount,
             });
@@ -219,6 +249,7 @@ export default function ExpenseRecord({
   };
 
   const updateAPIExpense = async (id, newData) => {
+    console.log(newData);
     await axios({
       url: `http://188.166.228.50:8089/expense/updateexpense/${id}`,
       method: "put",
@@ -241,8 +272,11 @@ export default function ExpenseRecord({
             Particulars: "",
             Amount: "",
             CGST: "",
+            CGSTPercentage: "",
             SGST: "",
+            SGSTPercentage: "",
             IGST: "",
+            IGSTPercentage: "",
             PaymentType: "",
             AccountType: "",
             Section: "",
@@ -263,8 +297,15 @@ export default function ExpenseRecord({
         } else if (err && err.response.status == 401) {
           navigate("/login");
         } else if (err.response && err.response.status == 500) {
+          console.log(err);
+          console.log(
+            ` ${
+              err.response && err.response.data && err.response.data.msg
+            } in ${err.response.data.path}`
+          );
           window.alert(
-            ` ${err.response && err.response.data && err.response.data.msg
+            ` ${
+              err.response && err.response.data && err.response.data.msg
             } in ${err.response.data.path}`
           );
         }
@@ -315,7 +356,8 @@ export default function ExpenseRecord({
           navigate("/login");
         } else if (err.response && err.response.status == 500) {
           window.alert(
-            ` ${err.response && err.response.data && err.response.data.msg
+            ` ${
+              err.response && err.response.data && err.response.data.msg
             } in ${err.response.data.path}`
           );
         }
@@ -487,67 +529,62 @@ export default function ExpenseRecord({
       field: "CGST",
       headerName: (
         <div>
-          <b>CGST % </b>
+          <b>CGST </b>
         </div>
       ),
       type: "number",
-      width: 130,
+      width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.CGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
-      align: "left",
-      headerAlign: "center",
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => {
-        const value = params.value || 0;
-        return (
-          <span>
-            <b>{value}</b>
-          </span>
-        );
-      },
+      headerAlign: "center",
+      align: "left",
     },
+
     {
       field: "SGST",
       headerName: (
         <div>
-          <b>SGST % </b>
+          <b>SGST </b>
         </div>
       ),
       type: "number",
-      width: 130,
+      width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.SGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
-      align: "left",
-      headerAlign: "center",
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => {
-        const value = params.value || 0;
-        return (
-          <span>
-            <b>{value}</b>
-          </span>
-        );
-      },
+      headerAlign: "center",
+      align: "left",
     },
     {
       field: "IGST",
       headerName: (
         <div>
-          <b>IGST % </b>
+          <b>IGST </b>
         </div>
       ),
       type: "number",
-      width: 130,
+      width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.IGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
-      align: "left",
-      headerAlign: "center",
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => {
-        const value = params.value || 0;
-        return (
-          <span>
-            <b>{value}</b>
-          </span>
-        );
-      },
+      headerAlign: "center",
+      align: "left",
     },
     {
       field: "TotalAmount",
@@ -837,18 +874,18 @@ export default function ExpenseRecord({
                     ) {
                       setAddDetails({
                         ...adddetails,
-                        CGST: Number(e.target.value),
+                        CGSTPercentage: Number(e.target.value),
                       });
                       setValidationError("");
                     } else {
                       setAddDetails({
                         ...adddetails,
-                        CGST: Number(e.target.value),
+                        CGSTPercentage: Number(e.target.value),
                       });
                       setValidationError("Please enter a positive number.");
                     }
                   }}
-                  value={Number(adddetails.CGST) || ""}
+                  value={Number(adddetails.CGSTPercentage) || ""}
                 />
                 {validationError && (
                   <div style={{ color: "red" }}>{validationError}</div>
@@ -1054,10 +1091,10 @@ export default function ExpenseRecord({
                 onChange={(e) =>
                   setAddDetails({
                     ...adddetails,
-                    SGST: Number(e.target.value),
+                    SGSTPercentage: Number(e.target.value),
                   })
                 }
-                value={Number(adddetails.SGST) || ""}
+                value={Number(adddetails.SGSTPercentage) || ""}
               />
               <FormControl sx={{ m: 1, minWidth: 220, marginBottom: "107px" }}>
                 <InputLabel
@@ -1149,10 +1186,10 @@ export default function ExpenseRecord({
                 onChange={(e) =>
                   setAddDetails({
                     ...adddetails,
-                    IGST: Number(e.target.value),
+                    IGSTPercentage: Number(e.target.value),
                   })
                 }
-                value={Number(adddetails.IGST) || ""}
+                value={Number(adddetails.IGSTPercentage) || ""}
               />
               <FormControl sx={{ m: 1, minWidth: 250, marginBottom: "105px" }}>
                 <InputLabel id="demo-simple-select-label">

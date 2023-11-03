@@ -52,7 +52,7 @@ export default function ExpenseDashboard() {
         <Grid item md={6}>
           <Typography
             sx={{
-              fontSize: "250%",
+              fontSize: "200%",
               color: "secondary",
               padding: "10px",
               fontFamily: 'Vazir',
@@ -94,7 +94,7 @@ export default function ExpenseDashboard() {
               >
                 Direct Expense
               </Typography>
-              <img src={ExpenseImg} alt="" />
+              <img src={ExpenseImg} alt="" width="100" height="70"/>
             </div>
             <div style={{ display: "flex" }}>
               <Typography
@@ -148,7 +148,7 @@ export default function ExpenseDashboard() {
               >
                 Indirect Expense
               </Typography>
-              <img src={ExpenseImg} alt="" />
+              <img src={ExpenseImg} alt="" width="100" height="70"/>
             </div>
             <div style={{ display: "flex" }}>
               <Typography

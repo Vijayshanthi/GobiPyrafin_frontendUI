@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import TdsDashboard from "../TDS/TdsDashboard";
+ 
 // import Gst from "../gst/Gst1.js";
 // import PayrollDashboard from "../Payroll/PayrollDashboard";
 import Menu from "@mui/material/Menu";
@@ -59,12 +60,14 @@ const Layout = () => {
       alignItems: 'center',
       justifyContent: 'center',
       width: '100vw',
-      height: '100vh',
-      backgroundImage:
-        'url("https://static.vecteezy.com/system/resources/thumbnails/000/570/382/small/1543.jpg")',
+      height: '130vh',
+      background: 'linear-gradient(180deg, #B6B6B6 -25.36%, #FFF 98.23%)',
+      // backgroundImage:
+      //   'url("https://static.vecteezy.com/system/resources/thumbnails/000/570/382/small/1543.jpg")',
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
     };
+    
     if (selectedTab === "dashboard") {
       return (
         <div style={componentStyle}>
@@ -148,7 +151,7 @@ const Layout = () => {
                 fontWeight: "bold",
               }}
             >
-              Pyra Fin
+              PYRA-FIN
             </Typography>
           </Toolbar>
           <List>

@@ -173,7 +173,7 @@ export default function TdsRecord({ }) {
             variant="h4"
             color="primary"
             style={{
-              fontSize: "250%",
+              fontSize: "200%",
               color: "secondary",
               padding: "10px",
               fontFamily: 'Vazir',

@@ -56,7 +56,7 @@ export default function IncomeDashboard() {
         <Grid item md={6} xs={3}>
           <Typography
             sx={{
-              fontSize: "250%",
+              fontSize: "200%",
               color: "secondary",
               padding: "10px",
               fontFamily: 'Vazir',
@@ -94,7 +94,8 @@ export default function IncomeDashboard() {
             >
               <Typography
                 sx={{
-                  fontSize: { md: "20px", xs: "1rem" }, color: "secondary",
+                  fontSize: { md: "20px", xs: "1rem" },
+                  color: "secondary",
                   padding: "10px",
                   fontFamily: 'Vazir',
                   color: "Black",
@@ -103,16 +104,19 @@ export default function IncomeDashboard() {
               >
                 Paid Income
               </Typography>
-              <img src={IncomeImg} alt="" />
+              <img src={IncomeImg} alt="" width="80" height="70"/>
             </div>
             <div style={{ display: "flex" }}>
               <Typography
                 sx={{
-                  fontSize: { md: "25px", xs: "1rem" }, color: "secondary",
-                  padding: "10px",
-                  fontFamily: 'Vazir',
                   color: "Black",
-                  fontWeight: "bold",
+                  marginTop: "-30px",
+                    fontSize: { md: "20px", xs: "2rem" },
+                    color: "secondary",
+                    padding: "10px",
+                    fontFamily: 'Vazir',
+                    color: "Black",
+                    fontWeight: "bold",
                 }}
               >
                 ₹ {totalIncome ? `${totalIncome}` : 0}
@@ -120,7 +124,7 @@ export default function IncomeDashboard() {
               <Typography
                 sx={{
                   fontSize: { md: "25px", xs: "1rem" },
-                  marginTop: "10px",
+                  marginTop: "-30px",
                   fontWeight: "800",
                   color: "green",
                 }}
@@ -155,7 +159,8 @@ export default function IncomeDashboard() {
             >
               <Typography
                 sx={{
-                  fontSize: { md: "20px", xs: "1rem" }, color: "secondary",
+                  fontSize: { md: "20px", xs: "1rem" },
+                  color: "secondary",
                   padding: "10px",
                   fontFamily: 'Vazir',
                   color: "Black",
@@ -164,12 +169,16 @@ export default function IncomeDashboard() {
               >
                 Outstanding Income
               </Typography>
-              <img src={IncomeImg} alt="" />
+              
+              <img src={IncomeImg} alt="" width="100" height="70" />
             </div>
             <div style={{ display: "flex" }}>
               <Typography
                 sx={{
-                  fontSize: { md: "20px", xs: "1rem" }, color: "secondary",
+                  color: "Black",
+                  marginTop: "-20px",
+                  fontSize: { md: "20px", xs: "2rem" },
+                  color: "secondary",
                   padding: "10px",
                   fontFamily: 'Vazir',
                   color: "Black",
@@ -181,7 +190,7 @@ export default function IncomeDashboard() {
               <Typography
                 sx={{
                   fontSize: { md: "25px", xs: "1rem" },
-                  marginTop: "5px",
+                  marginTop: "-20px",
                   fontWeight: "800",
                   color: "green",
                 }}

@@ -21,13 +21,12 @@ import { GridRowModes, DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const currentYear = new Date().getFullYear();
 const nextYear = currentYear + 1;
 const lastTwoDigitsCurrentYear = currentYear % 100;
 const lastTwoDigitsNextYear = nextYear % 100;
 
-export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
+export default function Income({ totalIncomecall, totalunpaidincomecall }) {
   const [open, setOpen] = React.useState(false);
   const [deleteopen, setdeleteOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -53,8 +52,11 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
     HSNSAC: "",
     Rate: "",
     CGST: "",
+    CGSTPercentage: "",
     SGST: "",
+    SGSTPercentage: "",
     IGST: "",
+    IGSTPercentage: "",
     Status: "",
     DueDate: "",
     ActionDate: "",
@@ -93,9 +95,9 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
     } else {
       if (adddetails.ActionDate <= adddetails.DueDate) {
         const total =
-          (adddetails.CGST / 100) * adddetails.Rate +
-          (adddetails.SGST / 100) * adddetails.Rate +
-          (adddetails.IGST / 100) * adddetails.Rate +
+          (adddetails.CGSTPercentage / 100) * adddetails.Rate +
+          (adddetails.SGSTPercentage / 100) * adddetails.Rate +
+          (adddetails.IGSTPercentage / 100) * adddetails.Rate +
           adddetails.Rate;
         setAddDetails({
           ...adddetails,
@@ -107,18 +109,18 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
             ...adddetails,
             TotalAmount: total,
             BalanceDue: total,
-            CGST: Number(adddetails.CGST),
-            SGST: Number(adddetails.SGST),
-            IGST: Number(adddetails.IGST),
+            CGST: Number((adddetails.CGSTPercentage / 100) * adddetails.Rate),
+            SGST: Number((adddetails.SGSTPercentage / 100) * adddetails.Rate),
+            IGST: Number((adddetails.IGSTPercentage / 100) * adddetails.Rate),
           });
         } else {
           addApiIncomeData({
             ...adddetails,
             TotalAmount: total,
             BalanceDue: total,
-            CGST: Number(adddetails.CGST),
-            SGST: Number(adddetails.SGST),
-            IGST: Number(adddetails.IGST),
+            CGST: Number((adddetails.CGSTPercentage / 100) * adddetails.Rate),
+            SGST: Number((adddetails.SGSTPercentage / 100) * adddetails.Rate),
+            IGST: Number((adddetails.IGSTPercentage / 100) * adddetails.Rate),
           });
         }
       } else {
@@ -153,7 +155,8 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
           navigate("/login");
         } else if (err.response && err.response.status == 500) {
           window.alert(
-            ` ${err.response && err.response.data && err.response.data.msg
+            ` ${
+              err.response && err.response.data && err.response.data.msg
             } in ${err.response.data.path}`
           );
         }
@@ -187,7 +190,8 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
           navigate("/login");
         } else if (err.response && err.response.status == 500) {
           window.alert(
-            ` ${err.response && err.response.data && err.response.data.msg
+            ` ${
+              err.response && err.response.data && err.response.data.msg
             } in ${err.response.data.path}`
           );
         }
@@ -374,25 +378,38 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
       field: "CGST",
       headerName: (
         <div>
-          <b>CGST % </b>
+          <b>CGST </b>
         </div>
       ),
       type: "number",
       width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.CGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
       headerClassName: "super-app-theme--header",
       headerAlign: "center",
       align: "left",
     },
+
     {
       field: "SGST",
       headerName: (
         <div>
-          <b>SGST % </b>
+          <b>SGST </b>
         </div>
       ),
       type: "number",
       width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.SGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
       headerClassName: "super-app-theme--header",
       headerAlign: "center",
@@ -402,11 +419,17 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
       field: "IGST",
       headerName: (
         <div>
-          <b>IGST % </b>
+          <b>IGST </b>
         </div>
       ),
       type: "number",
       width: 100,
+      renderCell: (params) => (
+        <div>
+          {Number(params.value)} <br />
+          {`(${params.row.IGSTPercentage})%`}
+        </div>
+      ),
       editable: true,
       headerClassName: "super-app-theme--header",
       headerAlign: "center",
@@ -425,8 +448,6 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
       headerAlign: "center",
       renderCell: (params) => {
         const value = params.value || 0;
-
-
 
         return (
           <span>
@@ -748,10 +769,10 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
                 onChange={(e) =>
                   setAddDetails({
                     ...adddetails,
-                    CGST: Number(e.target.value),
+                    CGSTPercentage: Number(e.target.value),
                   })
                 }
-                value={Number(adddetails.CGST) || ""}
+                value={Number(adddetails.CGSTPercentage) || ""}
               />
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <InputLabel id="demo-simple-select-label">
@@ -889,10 +910,10 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
                 onChange={(e) =>
                   setAddDetails({
                     ...adddetails,
-                    SGST: Number(e.target.value),
+                    SGSTPercentage: Number(e.target.value),
                   })
                 }
-                value={Number(adddetails.SGST) || ""}
+                value={Number(adddetails.SGSTPercentage) || ""}
               />
 
               <div>
@@ -1030,10 +1051,10 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
                 onChange={(e) =>
                   setAddDetails({
                     ...adddetails,
-                    IGST: Number(e.target.value),
+                    IGSTPercentage: Number(e.target.value),
                   })
                 }
-                value={Number(adddetails.IGST) || ""}
+                value={Number(adddetails.IGSTPercentage) || ""}
               />
 
               <div>
@@ -1133,14 +1154,3 @@ export default function Income2({ totalIncomecall, totalunpaidincomecall }) {
     </Box>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
